@@ -1,4 +1,5 @@
 <?php
+include_once ('my_function.php');
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 $projects = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
@@ -85,7 +86,7 @@ $tasks = [
                         <?php foreach ($projects as $project): ?>
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?= $project ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count"><?= calc_for_project($tasks, $project) ?></span>
                         </li>
                         <?php endforeach; ?>
                     </ul>
