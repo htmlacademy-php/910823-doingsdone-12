@@ -1,8 +1,3 @@
-<?php
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
-?>
-
 <section class="content__side">
     <h2 class="content__side-heading">Проекты</h2>
 
@@ -50,7 +45,7 @@ $show_complete_tasks = rand(0, 1);
             if ($task['result'] and $show_complete_tasks == 0) {
                 continue;
             } ?>
-            <tr class="tasks__item task<?php if ($task['result']): ?> task--completed<?php endif; ?>">
+            <tr class="tasks__item task<?php if (show_date($task['date']) >= 24): ?> task--important<?php endif; ?><?php if ($task['result']): ?> task--completed<?php endif; ?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox"<?php if ($task['result']): ?> checked<?php endif; ?>>
