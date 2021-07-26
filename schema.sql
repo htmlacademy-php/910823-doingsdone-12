@@ -10,7 +10,7 @@ CREATE TABLE users (
     name CHAR(128),
     email CHAR(128) NOT NULL UNIQUE,
     password CHAR(64) NOT NULL UNIQUE,
-    date_registration TIMESTAMP
+    date_registration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 /* Проекты */
@@ -24,7 +24,7 @@ CREATE TABLE projects (
 CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
     name CHAR,
-    date_of_creation TIMESTAMP,
+    date_of_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status TINYINT(1) DEFAULT 0, /* По умолчанию должно быть 0 (какой тип?) */
     /*file,*/ /* Какой тип? */
     due_date TIMESTAMP,
