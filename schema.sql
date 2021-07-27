@@ -5,28 +5,28 @@ DEFAULT COLLATE utf8_general_ci;
 USE things_are_ok;
 
 /* Пользователи */
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
-    name CHAR(128),
-    email CHAR(128) NOT NULL UNIQUE,
-    password CHAR(64) NOT NULL UNIQUE,
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    u_name VARCHAR(350),
+    email VARCHAR(350) NOT NULL UNIQUE,
+    password VARCHAR(128) NOT NULL UNIQUE,
     date_registration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 /* Проекты */
-CREATE TABLE projects (
-    id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
-    name CHAR(128),
-    user_id INT UNIQUE
+CREATE TABLE project (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    p_name VARCHAR(350),
+    user_id INT
 );
 
 /* Задачи к проектам */
-CREATE TABLE tasks (
-    id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
-    name CHAR,
+CREATE TABLE task (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    t_name VARCHAR(350),
     date_of_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status TINYINT(1) DEFAULT 0, /* По умолчанию должно быть 0 (какой тип?) */
-    /*file,*/ /* Какой тип? */
+    status TINYINT DEFAULT 0,
+    file VARCHAR(15000),
     due_date TIMESTAMP,
     user_id INT UNIQUE,
     project_id INT UNIQUE
