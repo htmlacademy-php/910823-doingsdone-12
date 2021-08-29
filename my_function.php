@@ -10,7 +10,7 @@ function calc_for_project($array_tasks, $project_name) {
     $result = 0;
 
     foreach ($array_tasks as $task) {
-        if ($task['category'] == $project_name) {
+        if ($task['project_id'] == $project_name) {
             $result++;
         }
     }

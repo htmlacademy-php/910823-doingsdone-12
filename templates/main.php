@@ -1,3 +1,22 @@
+<?php
+/* В сценарии главной страницы выполните подключение к MySQL. */
+$con = mysqli_connect("localhost", "root", "","things_are_ok");
+mysqli_set_charset($con, "utf8");
+
+/* Отправьте SQL-запрос для получения списка проектов у текущего пользователя. */
+$sql_project = "SELECT * FROM task
+                         JOIN project ON  project.id = task.project_id
+                         WHERE task.user_id = 3";
+$result_project = mysqli_query($con, $sql_project);
+$projects = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
+
+/* Отправьте SQL-запрос для получения списка из всех задач у текущего пользователя. */
+$sql_task = "SELECT * FROM task
+                      WHERE user_id = 3;";
+$result_task = mysqli_query($con, $sql_task);
+$tasks = mysqli_fetch_all($result_task, MYSQLI_ASSOC);
+
+?>
 <section class="content__side">
     <h2 class="content__side-heading">Проекты</h2>
 
@@ -5,8 +24,8 @@
         <ul class="main-navigation__list">
             <?php foreach ($projects as $project): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($project) ?></a>
-                    <span class="main-navigation__list-item-count"><?= calc_for_project($tasks, $project) ?></span>
+                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($project['p_name']) ?></a>
+                    <span class="main-navigation__list-item-count"><?= calc_for_project($tasks, $project['id']) ?></span>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -49,7 +68,7 @@
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox"<?php if ($task['result']): ?> checked<?php endif; ?>>
-                        <span class="checkbox__text"><?= htmlspecialchars($task['name']) ?></span>
+                        <span class="checkbox__text"><?= htmlspecialchars($task['t_name']) ?></span>
                     </label>
                 </td>
                 <td class="task__date"><?= $task['date'] ?></td>
