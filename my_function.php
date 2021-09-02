@@ -10,7 +10,7 @@ function calc_for_project($array_tasks, $project_name) {
     $result = 0;
 
     foreach ($array_tasks as $task) {
-        if ($task['category'] == $project_name) {
+        if ($task['project_id'] == $project_name) {
             $result++;
         }
     }
@@ -40,4 +40,14 @@ function show_date($array_date) {
      $result = floor($calc_date/3600);
 
     return $result;
+}
+
+/**
+ * Возвращает дату в отформатированном строковом представлении "ДД-MM-ГГГГ"
+ * @param string $date Дата в формате «ГГГГ-ММ-ДД ЧЧ:ММ:СС»
+ */
+function format_date($date) {
+    $date = date_create($date);
+
+    return date_format($date, 'd-m-Y');
 }
