@@ -41,3 +41,13 @@ function show_date($array_date) {
 
     return $result;
 }
+
+/**
+ * Возвращает дату в отформатированном строковом представлении "ДД-MM-ГГГГ"
+ * @param string $date Дата в формате «ГГГГ-ММ-ДД ЧЧ:ММ:СС»
+ */
+function format_date($date) {
+    $date = date_create($date);
+
+    return date_format($date, 'd-m-Y');
+}

@@ -31,14 +31,14 @@ UPDATE task SET t_status = 1 WHERE id = 3;
 
 /* Объединение полей */
 SELECT * FROM task
-                  JOIN project ON task.project_id = project.id
-                  JOIN user ON task.user_id = user.id;
+         INNER JOIN project ON task.project_id = project.id
+         INNER JOIN user ON task.user_id = user.id;
 
 /* Получить список из всех проектов для одного пользователя; */
 SELECT project.id, project.p_name FROM task
-                                           JOIN project ON project.id = task.project_id
-WHERE task.user_id = 1;
+                                  INNER JOIN project ON project.id = task.project_id
+                                  WHERE task.user_id = 1;
 
 /* Получить список из всех задач для одного проекта; */
 SELECT * FROM task
-WHERE project_id = 4;
+         WHERE project_id = 4;
