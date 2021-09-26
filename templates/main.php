@@ -4,7 +4,7 @@ $con = mysqli_connect("localhost", "root", "","things_are_ok");
 mysqli_set_charset($con, "utf8");
 
 /* Отправьте SQL-запрос для получения списка проектов у текущего пользователя. */
-$sql_project = "SELECT * FROM project 
+$sql_project = "SELECT * FROM project
                          WHERE user_id = 3";
 $result = mysqli_query($con, $sql_project);
 $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -15,6 +15,12 @@ $sql_task = "SELECT * FROM task
 $result = mysqli_query($con, $sql_task);
 $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+if (isset ($_GET['project_id'])) {
+    $project_id = (int)$_GET['project_id']; // int — чтобы хоть очистить
+    if (!$project_id) {
+        exit ('error 404');
+    }
+}
 ?>
 <section class="content__side">
     <h2 class="content__side-heading">Проекты</h2>
@@ -22,8 +28,8 @@ $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <nav class="main-navigation">
         <ul class="main-navigation__list">
             <?php foreach ($projects as $project): ?>
-                <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($project['p_name']) ?></a>
+                <li class="main-navigation__list-item<?php if ($project['id'] == $project_id): ?> main-navigation__list-item--active<?php endif; ?>">
+                    <a class="main-navigation__list-item-link" href="?project_id=<?= $project['id'] ?>"><?= htmlspecialchars($project['p_name']) ?></a>
                     <span class="main-navigation__list-item-count"><?= calc_for_project($tasks, $project['id']) ?></span>
                 </li>
             <?php endforeach; ?>
@@ -62,8 +68,12 @@ $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <?php foreach ($tasks as $task):
             if ($task['t_status'] and $show_complete_tasks == 0) {
                 continue;
-            } ?>
-            <tr class="tasks__item task <?php if (show_date($task['due_date']) >= 24): ?> task--important<?php endif; ?><?php if ($task['t_status']): ?> task--completed<?php endif; ?>">
+            }
+            if ($project_id > 0 and $task['project_id']!= $project_id) {
+                continue;
+            }
+            ?>
+            <tr class="tasks__item task<?php if (show_date($task['due_date']) >= 24): ?> task--important<?php endif; ?><?php if ($task['t_status']): ?> task--completed<?php endif; ?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox"<?php if ($task['t_status']): ?> checked<?php endif; ?>>
